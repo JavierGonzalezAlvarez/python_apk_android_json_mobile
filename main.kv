@@ -1,0 +1,122 @@
+#:kivy 1.11.0
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+#:import utils kivy.utils
+#:import rgba kivy.utils.get_color_from_hex
+#:import rgb kivy.utils.get_color_from_hex
+
+<Menu>:
+    orientation: 'vertical'
+    canvas.before:
+        Color:
+            rgb: .6, .6, .6
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    ScreenManager:
+        id: sm
+        #Indico el tipo de transicion entre Screens
+        transition: FadeTransition()
+        json_interno_id1: json_interno_id
+        api_id1: api_id
+        Menu_Principal:
+            id: menuprincipal_id
+            name: "menu_principal"
+            manager: sm
+        Json_Interno:
+            id: json_interno_id
+            name: "json_interno1"
+            manager: sm
+        Api:
+            id: api_id
+            name: "api1"
+            manager: sm
+    SomeMenu_ActionBar:
+        id: ActionBar
+
+#@ indica que la clase hereda ActionBar (se extiende)
+<SomeMenu_ActionBar@ActionBar>:
+    orientation: 'vertical'
+    ActionView:
+        HiddenIcon_ActionPrevious:
+        ActionButton:
+            font_size: 50
+            text: 'Inicio'
+            on_release:
+                self.background_color = (1.0, 0.0, 2.0, 1.0)
+                app.root.ids.sm.current = 'menu_principal'
+        ActionGroup:
+            id: App_ActionGroup
+            mode: 'spinner'
+            font_size: 50
+            text: 'Ajustes'
+            ActionButton:
+                text: 'Menu1'
+            ActionButton:
+                text: 'Menu2'
+            ActionButton:
+                text: 'Menu3'
+        
+<HiddenIcon_ActionPrevious@ActionPrevious>:
+    with_previous: False   
+    app_icon: ''
+
+<Api>:
+    name: "api1"
+    BoxLayout:
+        orientation: "vertical"
+        Button:
+            background_color: (0, 0, 204, 204) #Azul claro
+            font_size: sp(40)
+            text: "Ver (Lista) Json Externo"
+            on_press: 
+                root.traer_datos_api()
+        Label:
+            font_size: sp(25)
+            text: root.datos_json
+
+<Json_Interno>:
+    name: "json_interno1"
+    BoxLayout:
+        orientation: "vertical"
+        Button:
+            background_color: (0, 0, 204, 204)
+            font_size: sp(40)
+            text: "Ver Json Interno (consola en PC)"
+            on_press: 
+                root.traer_datos()
+
+<Menu_Principal>:
+    name: 'menu_principal'  
+    BoxLayout:
+        canvas.before:
+            Color:
+                rgba: 255, 255, 255, 255  #Blanco
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        BoxLayout:
+            size_hint_x: .650
+            size_hint_y: .850
+            orientation: "vertical"
+            Button:
+                id: B_MenuPrincipal_5
+                font_size: 70
+                background_color: rgba("#00FFFF")
+                text: "JSON Interno"
+                on_release:
+                    app.root.ids.sm.current = 'json_interno1'            
+            Button:
+                id: B_MenuPrincipal_8
+                font_size: 70
+                background_color: rgba("#00FFFF")
+                text: "JSON Externo"
+                on_release:
+                    app.root.ids.sm.current = 'api1'
+            Button:
+                id: B_MenuPrincipal_9
+                font_size: 70
+                background_color: rgba("#00FFFF")
+                text: "Salir"
+                on_release:
+                    quit()
