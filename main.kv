@@ -67,12 +67,12 @@
         orientation: "vertical"
         Button:
             background_color: (0, 0, 204, 204) #Azul claro
-            font_size: sp(40)
-            text: "Ver (Lista) Json Externo"
+            font_size: sp(20)
+            text: "Ver Json Externo"
             on_press: 
                 root.traer_datos_api()
         Label:
-            font_size: sp(25)
+            font_size: sp(10)
             text: root.datos_json
 
 <Json_Interno>:
@@ -81,8 +81,8 @@
         orientation: "vertical"
         Button:
             background_color: (0, 0, 204, 204)
-            font_size: sp(40)
-            text: "Ver Json Interno (consola en PC)"
+            font_size: sp(20)
+            text: "Ver por consola (PC)"
             on_press: 
                 root.traer_datos()
 
